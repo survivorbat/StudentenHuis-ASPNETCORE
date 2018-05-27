@@ -1,0 +1,51 @@
+﻿body {
+    background: url('/images/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: whitesmoke;
+    font-family: sans-serif;
+    font-weight: bolder;
+    overflow-x: hidden;
+}
+
+.btn-dark, .btn-dark a:link, .btn-dark a:visited {
+    color: whitesmoke;
+    background-color: rgba(0,0,0,0);
+    border-color: whitesmoke;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-dark:hover {
+    background-color: rgba(255,255,255,0.4);
+}
+
+.a, a:link, a:visited, a:hover {
+    cursor: pointer;
+    color: white !important;
+}
+
+content {
+    margin-top: 2em;
+}
+
+.card {
+    background-color: rgba(0,0,0,0.5);
+    border-color: rgba(255,255,255,0.4);
+    border-style: solid;
+    border-radius: 0.25em;
+    border-width: 1px;
+}
+
+.card-header h3 {
+    font-weight: bold;
+    margin-bottom: 0.125em;
+    padding-bottom: 0em;
+}
+
+h1 {
+    font-weight: bold;
+}

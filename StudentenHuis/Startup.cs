@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SportsStore.Models;
+using StudentenHuis.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +29,7 @@ namespace StudentenHuis
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
             Configuration["Data:StudentenhuisMaaltijden:ConnectionString"]));
-            services.AddTransient<IMealRepository, FakeMealRepository>();
+            services.AddTransient<IMealRepository, EFMealRepository>();
             services.AddMvc();
         }
 

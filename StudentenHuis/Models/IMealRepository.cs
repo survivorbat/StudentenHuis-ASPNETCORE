@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentenHuis.Models
 {
-    interface IMealRepository
+    public interface IMealRepository
     {
         IEnumerable<Meal> Meals { get; }
     }
