@@ -27,7 +27,7 @@ namespace StudentenHuisTests
             Assert.Equal("Prachtmaaltijd", list[0].Title);
             Assert.Equal("Prachtbeschrijving", list[0].Description);
             Assert.Equal("Z maaltijd", list[3].Title);
-            Assert.Equal(0.45, list[4].Price);
+            Assert.Equal(0.45, list[3].Price);
         }
     }
 }

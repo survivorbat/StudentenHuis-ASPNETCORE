@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using StudentenHuis.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using StudentenHuis.Models.ViewModels;
 
 namespace StudentenHuis
 {
@@ -31,6 +34,12 @@ namespace StudentenHuis
             Configuration["Data:StudentenhuisMaaltijden:ConnectionString"]));
             services.AddTransient<IMealRepository, EFMealRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,8 +47,9 @@ namespace StudentenHuis
         {
             if (env.IsDevelopment())
             {
+                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
-                app.UseStatusCodePages();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -47,6 +57,7 @@ namespace StudentenHuis
             }
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

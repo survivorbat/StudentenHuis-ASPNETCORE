@@ -1,0 +1,18 @@
+﻿@model Meal
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex w-100 justify-content-between">
+            <h3>@(Model.Title ?? "Geen titel beschikbaar")</h3>
+            <p>⏰ @(Model.Date.ToShortDateString() ?? "Geen datum beschikbaar")</p>
+        </div>
+        <div class="d-flex w-100 justify-content-between">
+            <p class="card-text">🍝 @(Model.Description ?? "Geen beschrijving beschikbaar")</p>
+            <div>
+                <p class="card-text">🍳 @(Model.Cook?.Fullname() ?? "?")</p>
+                <p class="card-text">👨 @(Model?.Eaters?.Count ?? 0) / @Model.MaxAmountOfGuests</p>
+                <p class="card-text">💰 @Model.Price</p>
+            </div>
+        </div>
+    </div>
+</div>

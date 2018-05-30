@@ -14,7 +14,6 @@ namespace StudentenHuis.Models
                 Title = "Spaghetti",
                 Description = "Erg lekker spaghetti bord",
                 Price = 2.35,
-                Cook = new Student(),
                 Date = new DateTime(2018,1,1),
                 MaxAmountOfGuests = 10
             }

@@ -32,7 +32,6 @@ namespace StudentenHuis
                     logger.LogError(e, "An error occured seeding the DB");
                 }
             }
-
             host.Run();
         }
 

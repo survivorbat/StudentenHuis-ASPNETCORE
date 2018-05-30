@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace StudentenHuis.Models
     {
         public Meal()
         {
-            Eaters = new List<Student>();
+            Eaters = new HashSet<MealStudent>();
         }
         public int ID { get; set; }
 
@@ -25,7 +26,7 @@ namespace StudentenHuis.Models
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Een maaltijd moet gekookt worden door een student")]
-        public virtual Student Cook { get; set; }
+        public virtual ApplicationUser Cook { get; set; }
 
         [Range(1,50, ErrorMessage = "Dit getal moet tussen de 1 en 50 zijn"), Required(ErrorMessage = "Een maximaal aantal gasten is vereist")]
         public int MaxAmountOfGuests { get; set; }
@@ -33,6 +34,6 @@ namespace StudentenHuis.Models
         [Range(0,50, ErrorMessage = "De prijs moet tussen de 0 en 50 zijn"), Required(ErrorMessage = "Een prijs is vereist")]
         public double Price { get; set; }
 
-        public virtual ICollection<Student> Eaters { get; set; }
+        public virtual ICollection<MealStudent> Eaters { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.AspNetCore.Builder;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+
 namespace StudentenHuis.Models
 {
     public static class SeedData
@@ -9,20 +11,19 @@ namespace StudentenHuis.Models
         public static void EnsurePopulated(IServiceProvider serviceProvider)
         {
             ApplicationDbContext context = serviceProvider.GetRequiredService<ApplicationDbContext>();
-            Student student = new Student()
+            UserManager<ApplicationUser> UM = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            ApplicationUser student = new ApplicationUser()
             {
+                UserName = "Arno",
+                Email = "a.broeders@avans.nl",
+                PhoneNumber = "06-827492",
                 Firstname = "Arno",
                 Lastname = "Broeders",
-                Email = "a.broeders@avans.nl",
-                Telephonenumber = "06827492"
             };
-            if (!context.Students.Any())
-            {
-                context.Students.Add(student);
-                context.SaveChanges();
-            }
+
             if (!context.Meals.Any())
             {
+                addUser(UM, student).Wait();
                 context.Meals.AddRange(
                 new Meal()
                 {
@@ -63,6 +64,12 @@ namespace StudentenHuis.Models
                 );
                 context.SaveChanges();
             }
+        }
+        public static async Task addUser(UserManager<ApplicationUser> UM, ApplicationUser student)
+        {
+            var result = await UM.CreateAsync(student, "super123@#!!!SSS");
+            Console.WriteLine(result);
+            Console.WriteLine(result.Succeeded);
         }
     }
 }

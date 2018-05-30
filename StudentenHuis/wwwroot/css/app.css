@@ -6,7 +6,6 @@
     background-size: cover;
     color: whitesmoke;
     font-family: sans-serif;
-    font-weight: bolder;
     overflow-x: hidden;
 }
 
@@ -33,12 +32,19 @@ content {
 }
 
 .card {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.6);
     border-color: rgba(255,255,255,0.4);
     border-style: solid;
     border-radius: 0.25em;
     border-width: 1px;
+    margin-bottom: 1em;
 }
+
+    .card:hover {
+        background-color: rgba(100,100,100,0.6);
+        border-color: rgba(255,255,255,0.9);
+        cursor: pointer;
+    }
 
 .card-header h3 {
     font-weight: bold;
@@ -46,6 +52,9 @@ content {
     padding-bottom: 0em;
 }
 
-h1 {
-    font-weight: bold;
+.container {
+    background-color: rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 0px 59px 28px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 59px 28px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 59px 28px rgba(0,0,0,0.5);
 }

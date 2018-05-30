@@ -1,0 +1,33 @@
+﻿@model SideBarViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model?.Authenticated ?? false)
+        {
+
+
+        }
+        else
+        {
+            <h3>Welkom bij het StudentenHuis!</h3>
+            <p>Het lijkt erop dat je helaas niet ingelogd bent op het moment, hierom kunnen we je helaas enkel maar een beperkt aantal data laten zien.</p>
+            <button class="btn btn-primary btn-block"><a asp-action="Login" asp-controller="Account">Inloggen</a></button>
+            <button class="btn btn-primary btn-block"><a asp-action="Register" asp-controller="Account">Registreren</a></button>
+        }
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h2>Vandaag:</h2>
+        @if (Model?.Today == null)
+        {
+
+            <p>Er staat voor vandaag (nog) geen maaltijd gepland :(</p>
+        }
+        else
+        {
+            @Html.Partial("MealSummary", Model.Today)
+        }
+    </div>
+</div>

@@ -11,22 +11,7 @@
     <div class="col-12">
         @foreach (var Meal in Model)
         {
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h3>@(Meal.Title ?? "Geen titel beschikbaar")</h3>
-                        <p>⏰ @(Meal.Date.ToString() ?? "Geen datum beschikbaar")</p>
-                    </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <p class="card-text">🍝 @(Meal.Description ?? "Geen beschrijving beschikbaar")</p>
-                        <div>
-                            <p class="card-text">🍳 @(Meal.Cook?.Firstname ?? "???")</p>
-                            <p class="card-text">👨 0 / @Meal.MaxAmountOfGuests</p>
-                            <p class="card-text">💰 @Meal.Price</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @Html.Partial("MealSummary", Meal)
 
         }
     </div>
