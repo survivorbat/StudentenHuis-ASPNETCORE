@@ -10,7 +10,7 @@ namespace StudentenHuis.Models
     public class MealStudent
     {
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public Meal Meal { get; set; }
         public int MealId { get; set; }
     }

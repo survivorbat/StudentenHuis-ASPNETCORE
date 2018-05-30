@@ -1,0 +1,19 @@
+﻿@model string
+
+@switch (Model)
+{
+    default:
+    case "NotLoggedIn":
+
+        break;
+    case "Default":
+        <button class="btn-dark btn">Inschrijven</button>
+        break;
+    case "IsCook":
+        <button class="text-danger btn-dark btn">Maaltijd verwijderen</button>
+        break;
+    case "Eater":
+        <button class="text-warning btn-dark btn">Uitschrijven</button>
+        break;
+
+}

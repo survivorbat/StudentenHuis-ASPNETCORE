@@ -62,8 +62,35 @@ namespace StudentenHuis
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: null,
+                    template: "Meal/{id}",
+                    defaults: new { controller = "Meal", action = "Detail" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "Meal",
+                    defaults: new { controller = "Meal", action = "Index" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "Account/Login",
+                    defaults: new { controller = "Account", action = "Login" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "Account/Logout",
+                    defaults: new { controller = "Account", action = "Logout" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "",
+                    defaults: new { controller = "Home", action = "Index" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "Home",
+                    defaults: new { controller = "Home", action = "Index" }
+                );
             });
         }
     }

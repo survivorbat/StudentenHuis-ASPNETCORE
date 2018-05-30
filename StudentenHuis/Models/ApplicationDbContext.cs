@@ -24,5 +24,7 @@ namespace StudentenHuis.Models
             modelBuilder.Entity<Meal>().HasOne<ApplicationUser>(e => e.Cook);
             modelBuilder.Entity<Meal>().HasMany<MealStudent>(e => e.Eaters).WithOne(e => e.Meal);
         }
+
+        protected UserManager<ApplicationUser> UserManager { get; set; }
     }
 }

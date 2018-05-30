@@ -9,12 +9,46 @@ namespace StudentenHuis.Models
 {
     public class EFMealRepository : IMealRepository
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext DB;
         public EFMealRepository(ApplicationDbContext db)
         {
-            this.db = db;
+            this.DB = db;
         }
 
-        IEnumerable<Meal> IMealRepository.Meals => db.Meals.Include(e => e.Cook).OrderByDescending(e => e.Date).ToList();
+        IEnumerable<Meal> IMealRepository.Meals => DB.Meals.Include(e => e.Cook).Include(e => e.Eaters).OrderByDescending(e => e.Date).ToList();
+
+        public bool CreateMeal(Meal meal)
+        {
+            DB.Add(meal);
+            return DB.SaveChanges() == 1;
+        }
+
+        public bool DeleteMeal(Meal meal)
+        {
+            DB.Remove(meal);
+            return DB.SaveChanges() == 1;
+        }
+
+        public bool JoinMeal(Meal Meal, string User)
+        {
+            DB.MealStudents.Add(new MealStudent()
+            {
+                ApplicationUserId = User,
+                MealId = Meal.ID,
+                Meal = Meal
+            });
+            return DB.SaveChanges() > 0;
+        }
+
+        public bool LeaveMeal(Meal Meal, string User)
+        {
+            DB.MealStudents.Remove(new MealStudent()
+            {
+                ApplicationUserId = User,
+                MealId = Meal.ID,
+                Meal = Meal
+            });
+            return DB.SaveChanges() > 0;
+        }
     }
 }

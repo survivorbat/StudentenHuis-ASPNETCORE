@@ -1,0 +1,13 @@
+﻿@model ApplicationUser
+
+<a asp-controller="Meal" asp-action="Detail" asp-route-id="@Model.ID">
+    <div class="card">
+        <div class="card-body">
+            <h3>@(Model.Fullname() ?? "Geen naam beschikbaar")</h3>
+            <div class="d-flex w-100 justify-content-between">
+                <p class="card-text">📧 @(Model.Email ?? "Geen email beschikbaar")</p>
+                <p class="card-text">☎ @(Model.PhoneNumber ?? "Geen telefoonnummer beschikbaar")</p>
+            </div>
+        </div>
+    </div>
+</a>

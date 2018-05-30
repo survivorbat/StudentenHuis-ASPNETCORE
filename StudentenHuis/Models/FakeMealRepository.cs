@@ -18,5 +18,25 @@ namespace StudentenHuis.Models
                 MaxAmountOfGuests = 10
             }
         };
+
+        public bool CreateMeal(Meal meal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteMeal(Meal meal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool JoinMeal(Meal Meal, string User)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool LeaveMeal(Meal meal, string User)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

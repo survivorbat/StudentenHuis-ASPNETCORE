@@ -2,17 +2,19 @@
 
 <div class="row">
     <div class="col-md-12">
-        @if (Model?.Authenticated ?? false)
+        @if (Model.User != null)
         {
 
-
+            <h2>Welkom terug!</h2>
+            <p>Je bent momenteel ingelogd als <b>@Model.User.Fullname()</b></p>
+            <button class="btn btn-dark btn-block"><a asp-action="Logout" asp-controller="Account">Uitloggen</a></button>
         }
         else
         {
             <h3>Welkom bij het StudentenHuis!</h3>
             <p>Het lijkt erop dat je helaas niet ingelogd bent op het moment, hierom kunnen we je helaas enkel maar een beperkt aantal data laten zien.</p>
-            <button class="btn btn-primary btn-block"><a asp-action="Login" asp-controller="Account">Inloggen</a></button>
-            <button class="btn btn-primary btn-block"><a asp-action="Register" asp-controller="Account">Registreren</a></button>
+            <button class="btn btn-dark btn-block"><a asp-action="Login" asp-controller="Account">Inloggen</a></button>
+            <button class="btn btn-dark btn-block"><a asp-action="Register" asp-controller="Account">Registreren</a></button>
         }
     </div>
 </div>

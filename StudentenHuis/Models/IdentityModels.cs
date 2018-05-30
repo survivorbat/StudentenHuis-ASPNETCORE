@@ -11,13 +11,13 @@ namespace StudentenHuis.Models
         public ApplicationUser()
         {
             MealsAsEater = new HashSet<MealStudent>();
-            MealsAsCook = new HashSet<MealStudent>();
+            MealsAsCook = new HashSet<Meal>();
         }
         public virtual string Firstname { get; set; }
         public virtual string Middlename { get; set; }
         public virtual string Lastname { get; set; }
         public virtual ICollection<MealStudent> MealsAsEater { get; set; }
-        public virtual ICollection<MealStudent> MealsAsCook { get; set; }
+        public virtual ICollection<Meal> MealsAsCook { get; set; }
 
         public string Fullname()
         {

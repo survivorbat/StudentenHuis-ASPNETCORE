@@ -11,9 +11,10 @@ using System;
 namespace StudentenHuis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180530140020_Added ID to mealstudent")]
+    partial class AddedIDtomealstudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,13 +216,18 @@ namespace StudentenHuis.Migrations
 
             modelBuilder.Entity("StudentenHuis.Models.MealStudent", b =>
                 {
-                    b.Property<int>("MealId");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.HasKey("MealId", "ApplicationUserId");
+                    b.Property<int>("MealId");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("MealId");
 
                     b.ToTable("MealStudents");
                 });
@@ -283,8 +289,7 @@ namespace StudentenHuis.Migrations
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("MealsAsEater")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("StudentenHuis.Models.Meal", "Meal")
                         .WithMany("Eaters")
