@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentenHuis.Models
 {
-    public class FakeMealRepository : IMealRepository
+    public class FakeMealRepository //: IMealRepository
     {
         public IEnumerable<Meal> Meals => new List<Meal> {
             new Meal()

@@ -11,8 +11,8 @@ using System;
 namespace StudentenHuis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180530140020_Added ID to mealstudent")]
-    partial class AddedIDtomealstudent
+    [Migration("20180602121313_Added unique to date in meals")]
+    partial class Addeduniquetodateinmeals
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -191,13 +191,12 @@ namespace StudentenHuis.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CookId")
-                        .IsRequired();
+                    b.Property<string>("CookId");
 
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500);
+                        .HasMaxLength(1000);
 
                     b.Property<int>("MaxAmountOfGuests");
 
@@ -205,29 +204,27 @@ namespace StudentenHuis.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(25);
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
                     b.HasIndex("CookId");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
 
                     b.ToTable("Meals");
                 });
 
             modelBuilder.Entity("StudentenHuis.Models.MealStudent", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("MealId");
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("MealId");
-
-                    b.HasKey("ID");
+                    b.HasKey("MealId", "ApplicationUserId");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("MealId");
 
                     b.ToTable("MealStudents");
                 });
@@ -281,15 +278,15 @@ namespace StudentenHuis.Migrations
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "Cook")
                         .WithMany("MealsAsCook")
-                        .HasForeignKey("CookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CookId");
                 });
 
             modelBuilder.Entity("StudentenHuis.Models.MealStudent", b =>
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("MealsAsEater")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("StudentenHuis.Models.Meal", "Meal")
                         .WithMany("Eaters")

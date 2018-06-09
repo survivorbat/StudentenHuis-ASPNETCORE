@@ -11,8 +11,8 @@ using System;
 namespace StudentenHuis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180530112730_Initial")]
-    partial class Initial
+    [Migration("20180601145126_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -218,17 +218,11 @@ namespace StudentenHuis.Migrations
                 {
                     b.Property<int>("MealId");
 
-                    b.Property<int>("ApplicationUserId");
-
-                    b.Property<string>("ApplicationUserId1");
-
-                    b.Property<string>("ApplicationUserId2");
+                    b.Property<string>("ApplicationUserId");
 
                     b.HasKey("MealId", "ApplicationUserId");
 
-                    b.HasIndex("ApplicationUserId1");
-
-                    b.HasIndex("ApplicationUserId2");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("MealStudents");
                 });
@@ -281,7 +275,7 @@ namespace StudentenHuis.Migrations
             modelBuilder.Entity("StudentenHuis.Models.Meal", b =>
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "Cook")
-                        .WithMany()
+                        .WithMany("MealsAsCook")
                         .HasForeignKey("CookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -290,11 +284,8 @@ namespace StudentenHuis.Migrations
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("MealsAsEater")
-                        .HasForeignKey("ApplicationUserId1");
-
-                    b.HasOne("StudentenHuis.Models.ApplicationUser")
-                        .WithMany("MealsAsCook")
-                        .HasForeignKey("ApplicationUserId2");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("StudentenHuis.Models.Meal", "Meal")
                         .WithMany("Eaters")

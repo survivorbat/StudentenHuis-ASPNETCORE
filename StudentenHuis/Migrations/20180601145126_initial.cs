@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StudentenHuis.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -186,30 +186,16 @@ namespace StudentenHuis.Migrations
                 columns: table => new
                 {
                     MealId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<int>(nullable: false),
-                    ApplicationUserId1 = table.Column<string>(nullable: true),
-                    ApplicationUserId2 = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MealStudents", x => new { x.MealId, x.ApplicationUserId });
                     table.ForeignKey(
-                        name: "FK_MealStudents_AspNetUsers_ApplicationUserId1",
-                        column: x => x.ApplicationUserId1,
+                        name: "FK_MealStudents_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MealStudents_AspNetUsers_ApplicationUserId2",
-                        column: x => x.ApplicationUserId2,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MealStudents_Meals_MealId",
-                        column: x => x.MealId,
-                        principalTable: "Meals",
-                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -258,14 +244,9 @@ namespace StudentenHuis.Migrations
                 column: "CookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealStudents_ApplicationUserId1",
+                name: "IX_MealStudents_ApplicationUserId",
                 table: "MealStudents",
-                column: "ApplicationUserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealStudents_ApplicationUserId2",
-                table: "MealStudents",
-                column: "ApplicationUserId2");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

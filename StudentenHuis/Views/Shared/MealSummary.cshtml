@@ -1,21 +1,31 @@
 ﻿@model Meal
 
-<a asp-controller="Meal" asp-action="Detail" asp-route-id="@Model.ID">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex w-100 justify-content-between">
-                <h3>@(Model.Title ?? "Geen titel beschikbaar")</h3>
-                <p>⏰ @(Model.Date.ToShortDateString() ?? "Geen datum beschikbaar")</p>
-            </div>
-            <div class="d-flex w-100 justify-content-between">
-                <p class="card-text">🍝 @(Model.Description ?? "Geen beschrijving beschikbaar")</p>
-                <div>
-                    <p class="card-text">🍳 @(Model.Cook?.Fullname() ?? "?")</p>
-                    <p class="card-text">👨 @(Model?.Eaters?.Count ?? 0) / @Model.MaxAmountOfGuests</p>
-                    <p class="card-text">💰 @Model.Price</p>
-                    @await Component.InvokeAsync("MealButtons", Model)
+
+<div class="card">
+    <div class="card-body">
+        
+        <div class="d-flex w-100 justify-content-between">
+            <a asp-controller="Meal" asp-action="Detail" asp-route-id="@Model.ID">
+                <h4>@(Model.Title ?? "Geen titel beschikbaar")</h4>
+            </a>
+            <p style="white-space: nowrap">⏰ @(Model.Date.Date.ToShortDateString() ?? "Geen datum beschikbaar")</p>
+        </div>
+        
+        <div class="d-flex w-100 justify-content-between">
+            <div>
+                <p class="card-text">👨 @(Model?.Eaters?.Count ?? 0) / @Model.MaxAmountOfGuests</p>
+                <p class="card-text">
+                    <button type="button" class="btn btn-dark btn-sm btn-block" data-toggle="collapse" data-target="#cookMeal_@(Model.ID)_@(Model.Cook.Id)" aria-expanded="false" aria-controls="collapseCook">🍳 @(Model.Cook?.Fullname() ?? "?")</button>
+                </p>
+                <div class="collapse" id="cookMeal_@(Model.ID)_@(Model.Cook.Id)">
+                    <span style="display: none">@(ViewBag.PreventStackOverflow = false)</span>
+                    @Html.Partial("UserSummary", Model.Cook)
                 </div>
+            </div>
+            <div>
+                <p class="card-text">💰 @Model.Price</p>
+                @await Component.InvokeAsync("MealButtons", Model)
             </div>
         </div>
     </div>
-</a>
+</div>

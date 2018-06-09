@@ -8,11 +8,12 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         @foreach (var Meal in Model)
         {
-            @Html.Partial("MealSummary", Meal)
 
+            @Html.Partial("MealSummary", Meal)
+            <hr />
         }
     </div>
 </div>

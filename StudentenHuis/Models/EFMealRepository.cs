@@ -15,40 +15,68 @@ namespace StudentenHuis.Models
             this.DB = db;
         }
 
-        IEnumerable<Meal> IMealRepository.Meals => DB.Meals.Include(e => e.Cook).Include(e => e.Eaters).OrderByDescending(e => e.Date).ToList();
+        IEnumerable<Meal> IMealRepository.Meals => DB.Meals.Include("Cook").Include("Eaters.ApplicationUser").OrderBy(e => e.Date).ToList();
 
-        public bool CreateMeal(Meal meal)
+        public bool CreateMeal(Meal Meal)
         {
-            DB.Add(meal);
-            return DB.SaveChanges() == 1;
+            if(DB.Meals.Where(e => e.Date.Date.Equals(Meal.Date.Date)).Count() < 1)
+            {
+                DB.Meals.Add(Meal);
+                return DB.SaveChanges() == 1;
+            }
+            else
+            {
+                return false;
+            }
+           
         }
 
-        public bool DeleteMeal(Meal meal)
+        public bool UpdateMeal(Meal Meal)
         {
-            DB.Remove(meal);
-            return DB.SaveChanges() == 1;
+            Meal ChangingMeal = DB.Meals.Where(e => e.ID == Meal.ID).FirstOrDefault();
+            if (ChangingMeal?.Eaters?.Count() != 0) return false;
+
+            ChangingMeal.Title = Meal.Title;
+            ChangingMeal.Description = Meal.Description;
+            ChangingMeal.MaxAmountOfGuests = Meal.MaxAmountOfGuests;
+            ChangingMeal.Price = Meal.Price;
+
+            return DB.SaveChanges() > 0;
         }
 
-        public bool JoinMeal(Meal Meal, string User)
+        public bool DeleteMeal(int Meal)
         {
+            Meal Selected = DB.Meals.Where(e => e.ID == Meal).FirstOrDefault();
+            if (Selected.Eaters.Count() != 0) return false;
+            if(Selected != null)
+            {
+                DB.Remove(Selected);
+                return DB.SaveChanges() > 0;
+            }
+            return true;
+        }
+
+        public bool JoinMeal(int Meal, string User)
+        {
+            Meal Current = DB.Meals.Where(e => e.ID == Meal).FirstOrDefault();
+            if (Current.Eaters.Count() >= Current.MaxAmountOfGuests) return false;
             DB.MealStudents.Add(new MealStudent()
             {
                 ApplicationUserId = User,
-                MealId = Meal.ID,
-                Meal = Meal
+                MealId = Meal
             });
             return DB.SaveChanges() > 0;
         }
 
-        public bool LeaveMeal(Meal Meal, string User)
+        public bool LeaveMeal(int Meal, string User)
         {
-            DB.MealStudents.Remove(new MealStudent()
+            MealStudent MealStudent =  DB.MealStudents.Where(e => e.ApplicationUserId == User).Where(e => e.MealId == Meal).FirstOrDefault();
+            if (MealStudent != null)
             {
-                ApplicationUserId = User,
-                MealId = Meal.ID,
-                Meal = Meal
-            });
-            return DB.SaveChanges() > 0;
+                DB.MealStudents.Remove(MealStudent);
+                return DB.SaveChanges() > 0;
+            }
+            return false;
         }
     }
 }

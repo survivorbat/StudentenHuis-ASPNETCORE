@@ -190,13 +190,12 @@ namespace StudentenHuis.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CookId")
-                        .IsRequired();
+                    b.Property<string>("CookId");
 
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500);
+                        .HasMaxLength(1000);
 
                     b.Property<int>("MaxAmountOfGuests");
 
@@ -204,11 +203,14 @@ namespace StudentenHuis.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(25);
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
                     b.HasIndex("CookId");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
 
                     b.ToTable("Meals");
                 });
@@ -275,8 +277,7 @@ namespace StudentenHuis.Migrations
                 {
                     b.HasOne("StudentenHuis.Models.ApplicationUser", "Cook")
                         .WithMany("MealsAsCook")
-                        .HasForeignKey("CookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CookId");
                 });
 
             modelBuilder.Entity("StudentenHuis.Models.MealStudent", b =>

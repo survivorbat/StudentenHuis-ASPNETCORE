@@ -1,19 +1,35 @@
-﻿@model string
+﻿@model MealButtonViewModel
 
-@switch (Model)
+@switch (Model.Affiliation)
 {
+    case "Default":
+        @using (Html.BeginForm("JoinMeal", "Meal"))
+        {
+            @Html.Hidden("MealID", Model.Meal.ID)
+            <input type="submit" class="btn-dark btn btn-block" value="Inschrijven" />
+        }
+        break;
+    case "IsCook":
+        <a asp-controller="Meal" asp-action="EditMeal" asp-route-id="@Model.Meal.ID"><input class="btn-dark btn btn-block" value="Aanpassen"></a>
+        @using (Html.BeginForm("DeleteMeal", "Meal"))
+        {
+            @Html.Hidden("MealID", Model.Meal.ID)
+            <input type="submit" class="text-danger btn-dark btn btn-block" value="Verwijderen" />
+        }
+        break;
+    case "Eater":
+        @using (Html.BeginForm("LeaveMeal", "Meal"))
+        {
+            @Html.Hidden("MealID", Model.Meal.ID)
+            <input type="submit" class="text-warning btn-dark btn btn-block" value="Uitschrijven" />
+        }
+        break;
+    case "Full":
+        <input type="submit" class="text-danger btn-dark btn btn-block" value="Vol" />
+        break;
     default:
+    case "IsCookAndNotEmpty":
     case "NotLoggedIn":
 
         break;
-    case "Default":
-        <button class="btn-dark btn">Inschrijven</button>
-        break;
-    case "IsCook":
-        <button class="text-danger btn-dark btn">Maaltijd verwijderen</button>
-        break;
-    case "Eater":
-        <button class="text-warning btn-dark btn">Uitschrijven</button>
-        break;
-
 }

@@ -7,14 +7,14 @@
 
             <h2>Welkom terug!</h2>
             <p>Je bent momenteel ingelogd als <b>@Model.User.Fullname()</b></p>
-            <button class="btn btn-dark btn-block"><a asp-action="Logout" asp-controller="Account">Uitloggen</a></button>
+            <a asp-action="Logout" asp-controller="Account"><button class="btn btn-dark btn-block">Uitloggen</button></a>
         }
         else
         {
             <h3>Welkom bij het StudentenHuis!</h3>
             <p>Het lijkt erop dat je helaas niet ingelogd bent op het moment, hierom kunnen we je helaas enkel maar een beperkt aantal data laten zien.</p>
-            <button class="btn btn-dark btn-block"><a asp-action="Login" asp-controller="Account">Inloggen</a></button>
-            <button class="btn btn-dark btn-block"><a asp-action="Register" asp-controller="Account">Registreren</a></button>
+            <a asp-action="Login" asp-controller="Account"><button class="btn btn-dark btn-block">Inloggen</button></a><br/>
+            <a asp-action="Register" asp-controller="Account"><button class="btn btn-dark btn-block">Registreren</button></a>
         }
     </div>
 </div>
@@ -25,7 +25,7 @@
         @if (Model?.Today == null)
         {
 
-            <p>Er staat voor vandaag (nog) geen maaltijd gepland :(</p>
+            <p>Geen maaltijd voor vandaag</p>
         }
         else
         {

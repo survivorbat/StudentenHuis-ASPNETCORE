@@ -33,11 +33,20 @@ namespace StudentenHuis
             options.UseSqlServer(
             Configuration["Data:StudentenhuisMaaltijden:ConnectionString"]));
             services.AddTransient<IMealRepository, EFMealRepository>();
+            services.AddTransient<IUserRepository, EFUserRepository>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
         }
@@ -45,7 +54,7 @@ namespace StudentenHuis
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || true)
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
@@ -62,34 +71,12 @@ namespace StudentenHuis
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: null,
-                    template: "Meal/{id}",
-                    defaults: new { controller = "Meal", action = "Detail" }
+                    name: "DefaultWithId",
+                    template: "{controller=Home}/{action=Index}/{id:int}"
                 );
                 routes.MapRoute(
-                    name: null,
-                    template: "Meal",
-                    defaults: new { controller = "Meal", action = "Index" }
-                );
-                routes.MapRoute(
-                    name: null,
-                    template: "Account/Login",
-                    defaults: new { controller = "Account", action = "Login" }
-                );
-                routes.MapRoute(
-                    name: null,
-                    template: "Account/Logout",
-                    defaults: new { controller = "Account", action = "Logout" }
-                );
-                routes.MapRoute(
-                    name: null,
-                    template: "",
-                    defaults: new { controller = "Home", action = "Index" }
-                );
-                routes.MapRoute(
-                    name: null,
-                    template: "Home",
-                    defaults: new { controller = "Home", action = "Index" }
+                    name: "Default",
+                    template: "{controller=Home}/{action=Index}"
                 );
             });
         }

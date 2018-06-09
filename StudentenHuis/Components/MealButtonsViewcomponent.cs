@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StudentenHuis.Models;
+using StudentenHuis.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,12 @@ namespace StudentenHuis.Components
             var User = this.HttpContext.User;
             string UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);    
             
-            if (UserID == null) return View("Default","NotLoggedIn");
-            if (Meal.Cook.Id == UserID) return View("Default","IsCook");
-            if (Meal.Eaters.Select(e => e.ApplicationUserId).Contains(UserID)) return View("Default","Eater");
-            return View("Default","Default");
+            if (UserID == null) return View("Default", new MealButtonViewModel() { Meal = Meal, Affiliation = "NotLoggedIn" });
+            if (Meal.Cook.Id == UserID && Meal.Eaters.Count == 0) return View("Default", new MealButtonViewModel() { Meal = Meal, Affiliation = "IsCook" });
+            if (Meal.Cook.Id == UserID) return View("Default", new MealButtonViewModel() { Meal = Meal, Affiliation = "IsCookAndNotEmpty" });
+            if (Meal.Eaters.Select(e => e.ApplicationUserId).Contains(UserID)) return View("Default", new MealButtonViewModel() { Meal = Meal, Affiliation = "Eater" });
+            if (Meal.MaxAmountOfGuests <= Meal.Eaters.Count()) return View("Default", new MealButtonViewModel() { Meal = Meal, Affiliation = "Full" });
+            return View("Default",new MealButtonViewModel() { Meal = Meal, Affiliation = "Default", MealID = Meal.ID });
         }
     }
 }

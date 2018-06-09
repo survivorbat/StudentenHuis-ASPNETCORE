@@ -10,14 +10,20 @@ namespace StudentenHuis.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<ApplicationUser> userManager;
+        private UserManager<ApplicationUser> UserManager;
         private SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> userMgr,
-        
-            SignInManager<ApplicationUser> signInMgr)
+        private IUserRepository UserRepository;
+        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signInMgr, IUserRepository UserRepository)
         {
-            userManager = userMgr;
+            UserManager = userMgr;
             signInManager = signInMgr;
+            this.UserRepository = UserRepository;
+        }
+
+        [Authorize]
+        public ViewResult Index()
+        {
+            return View(UserRepository.Users);
         }
 
         [AllowAnonymous]
@@ -36,7 +42,7 @@ namespace StudentenHuis.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user =
-                await userManager.FindByNameAsync(loginModel.Name);
+                await UserManager.FindByNameAsync(loginModel.Name);
             if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -54,6 +60,40 @@ namespace StudentenHuis.Controllers
         {
             await signInManager.SignOutAsync();
             return Redirect(returnUrl);
+        }
+[HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    Firstname = model.Firstname,
+                    Middlename = model.Middlename,
+                    Lastname = model.Lastname,
+                    PhoneNumber = model.Phonenumber
+                };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return Redirect("/");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
     }
 }

@@ -8,10 +8,11 @@ namespace StudentenHuis.Models
     public interface IMealRepository
     {
         IEnumerable<Meal> Meals { get; }
-        bool JoinMeal(Meal Meal, string User);
-        bool LeaveMeal(Meal meal, string User);
+        bool JoinMeal(int Meal, string User);
+        bool LeaveMeal(int Meal, string User);
 
-        bool CreateMeal(Meal meal);
-        bool DeleteMeal(Meal meal);
+        bool CreateMeal(Meal Meal);
+        bool UpdateMeal(Meal Meal);
+        bool DeleteMeal(int MealID);
     }
 }

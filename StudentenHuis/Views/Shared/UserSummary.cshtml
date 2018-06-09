@@ -1,13 +1,45 @@
 ﻿@model ApplicationUser
 
-<a asp-controller="Meal" asp-action="Detail" asp-route-id="@Model.ID">
-    <div class="card">
-        <div class="card-body">
-            <h3>@(Model.Fullname() ?? "Geen naam beschikbaar")</h3>
-            <div class="d-flex w-100 justify-content-between">
-                <p class="card-text">📧 @(Model.Email ?? "Geen email beschikbaar")</p>
-                <p class="card-text">☎ @(Model.PhoneNumber ?? "Geen telefoonnummer beschikbaar")</p>
-            </div>
+
+<div class="card">
+    <div class="card-body">
+        <h4><a asp-controller="Account" asp-action="Detail" asp-route-id="@(Model?.Id ?? "0")">@(Model?.Fullname() ?? "Geen naam beschikbaar")</a></h4>
+        <p class="card-text" style="margin-bottom:2px">📧 @(Model?.Email ?? "Geen email beschikbaar")</p>
+        <p class="card-text">☎ @(Model?.PhoneNumber ?? "Geen telefoonnummer beschikbaar")</p>
+        @if(ViewBag?.PreventStackOverflow ?? true)
+        {
+        <button type="button" class="btn-dark btn btn-sm" data-toggle="collapse" data-target="#mealsToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍝 Eet mee</button>
+        <button type="button" class="btn btn-dark btn-sm" data-toggle="collapse" data-target="#cooksToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍳 Kookt</button>
+        <div class="collapse" id="mealsToggleID_@Model?.Id">
+            @foreach (var Meal in Model.MealsAsEater)
+            {
+                @Html.Partial("MealSummary", Meal.Meal);
+
+            }
+            @if (Model.MealsAsEater.Count() < 1)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Firstname heeft (nog) geen maaltijden bijgewoond</p>
+                    </div>
+                </div>
+            }
         </div>
+        <div id="cooksToggleID_@Model?.Id" class="collapse">
+            @foreach (var Meal in Model.MealsAsCook)
+            {
+                @Html.Partial("MealSummary", Meal);
+
+            }
+            @if (Model.MealsAsCook.Count() < 1)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Firstname heeft (nog) geen maaltijden gemaakt</p>
+                    </div>
+                </div>
+            }
+        </div>
+        }
     </div>
-</a>
+</div>

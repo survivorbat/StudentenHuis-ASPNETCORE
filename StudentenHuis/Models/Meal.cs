@@ -16,16 +16,17 @@ namespace StudentenHuis.Models
         }
         public int ID { get; set; }
 
-        [StringLength(25, ErrorMessage = "Een titel moet mnimaal 5 tekens bevatten", MinimumLength = 5), Required(ErrorMessage = "Een titel is vereist")]
+        [MaxLength(100)]
+        [StringLength(100, ErrorMessage = "Een titel moet mnimaal 5 tekens bevatten", MinimumLength = 5), Required(ErrorMessage = "Een titel is vereist")]
         public string Title { get; set; }
 
-        [StringLength(500, ErrorMessage = "Een beschrijving mag maximaal 500 tekens bevatten")]
+        [MaxLength(1000)]
+        [StringLength(1000, ErrorMessage = "Een beschrijving mag maximaal 1000 tekens bevatten")]
         public string Description { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Datum en tijd zijn vereist")]
         public DateTime Date { get; set; }
 
-        [Required(ErrorMessage = "Een maaltijd moet gekookt worden door een student")]
         public virtual ApplicationUser Cook { get; set; }
 
         [Range(1,50, ErrorMessage = "Dit getal moet tussen de 1 en 50 zijn"), Required(ErrorMessage = "Een maximaal aantal gasten is vereist")]
