@@ -15,14 +15,14 @@ namespace StudentenHuis.Controllers
     {
         private IMealRepository MealRepository;
         private IUserRepository UserRepository;
-        public MealController(IMealRepository mealRepository, IUserRepository UserRepository)
+        public MealController(IMealRepository MealRepository, IUserRepository UserRepository)
         {
-            this.MealRepository = mealRepository;
+            this.MealRepository = MealRepository;
             this.UserRepository = UserRepository;
         }
         public ViewResult Index()
         {
-            return View(MealRepository.Meals.Where(e => e.Date.Date.CompareTo(DateTime.Now.Date) >= 0).ToList());
+            return View(MealRepository.Meals.Where(e => e.Date.Date.CompareTo(DateTime.Now.Date) >= 0).Where(e => e.Date.Date.CompareTo(DateTime.Now.Date.AddDays(14)) < 0).ToList());
         }
         
         [Authorize]
@@ -47,6 +47,7 @@ namespace StudentenHuis.Controllers
         [HttpPost]
         public IActionResult EditMeal(Meal Meal)
         {
+            if (Meal.Eaters.Count != 0) return Redirect("/Error");
             if (MealRepository.UpdateMeal(Meal))
             {
                 return Redirect("/Meal");
@@ -67,6 +68,7 @@ namespace StudentenHuis.Controllers
                 return Redirect("/Meal");
             } else
             {
+                ModelState.AddModelError("Date", "A meal is already planned on this day");
                 return View(Meal);
             }
         }
@@ -75,7 +77,9 @@ namespace StudentenHuis.Controllers
         [HttpPost]
         public IActionResult JoinMeal(MealButtonViewModel MealButtonViewModel)
         {
-            if (MealRepository.JoinMeal(MealButtonViewModel.MealID, User.FindFirstValue(ClaimTypes.NameIdentifier))) {
+            Meal Meal = MealRepository.Meals.Where(e => e.ID == MealButtonViewModel.MealID).FirstOrDefault();
+            if (Meal?.Eaters?.Count >= Meal.MaxAmountOfGuests) return View("Error");
+            if (MealRepository.JoinMeal(MealButtonViewModel.MealID, User?.FindFirstValue(ClaimTypes.NameIdentifier) ?? "")) {
                 return Redirect("/Meal");
             }
             else
@@ -100,6 +104,9 @@ namespace StudentenHuis.Controllers
         [HttpPost]
         public IActionResult DeleteMeal(MealButtonViewModel MealButtonViewModel)
         {
+            Meal Meal = MealRepository.Meals.Where(e => e.ID == MealButtonViewModel.MealID).FirstOrDefault();
+            if (Meal.Eaters.Count != 0) return View("Error");
+            if (User != null && !Meal.Cook.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier))) return View("Error");
             if (MealRepository.DeleteMeal(MealButtonViewModel.MealID))
             {
                 return Redirect("/Meal");

@@ -5,16 +5,16 @@
         @if (Model.User != null)
         {
 
-            <h2>Welkom terug!</h2>
-            <p>Je bent momenteel ingelogd als <b>@Model.User.Fullname()</b></p>
-            <a asp-action="Logout" asp-controller="Account"><button class="btn btn-dark btn-block">Uitloggen</button></a>
+            <h2>Welcome back!</h2>
+            <p>You are currently logged in as <b>@Model.User.Fullname()</b></p>
+            <a asp-action="Logout" asp-controller="Account"><button class="btn btn-dark btn-block">Leave</button></a>
         }
         else
         {
-            <h3>Welkom bij het StudentenHuis!</h3>
-            <p>Het lijkt erop dat je helaas niet ingelogd bent op het moment, hierom kunnen we je helaas enkel maar een beperkt aantal data laten zien.</p>
-            <a asp-action="Login" asp-controller="Account"><button class="btn btn-dark btn-block">Inloggen</button></a><br/>
-            <a asp-action="Register" asp-controller="Account"><button class="btn btn-dark btn-block">Registreren</button></a>
+            <h3>Time to eat!</h3>
+            <p>It looks like you're not logged in currently, if you want to join a meal or add a new meal you have to login or register as a student.</p>
+            <a asp-action="Login" asp-controller="Account"><button class="btn btn-dark btn-block">Login</button></a><br/>
+            <a asp-action="Register" asp-controller="Account"><button class="btn btn-dark btn-block">Register</button></a>
         }
     </div>
 </div>

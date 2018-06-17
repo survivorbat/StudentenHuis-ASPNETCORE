@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-body">
-        <h4><a asp-controller="Account" asp-action="Detail" asp-route-id="@(Model?.Id ?? "0")">@(Model?.Fullname() ?? "Geen naam beschikbaar")</a></h4>
-        <p class="card-text" style="margin-bottom:2px">📧 @(Model?.Email ?? "Geen email beschikbaar")</p>
-        <p class="card-text">☎ @(Model?.PhoneNumber ?? "Geen telefoonnummer beschikbaar")</p>
+        <h4>@(Model?.Fullname() ?? "No name available")</h4>
+        <p class="card-text" style="margin-bottom:2px">📧 @(Model?.Email ?? "No email available")</p>
+        <p class="card-text">☎ @(Model?.PhoneNumber ?? "No phonenumber available")</p>
         @if(ViewBag?.PreventStackOverflow ?? true)
         {
-        <button type="button" class="btn-dark btn btn-sm" data-toggle="collapse" data-target="#mealsToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍝 Eet mee</button>
-        <button type="button" class="btn btn-dark btn-sm" data-toggle="collapse" data-target="#cooksToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍳 Kookt</button>
+        <button type="button" class="btn-dark btn btn-sm" data-toggle="collapse" data-target="#mealsToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍝 Joins</button>
+        <button type="button" class="btn btn-dark btn-sm" data-toggle="collapse" data-target="#cooksToggleID_@Model?.Id" aria-expanded="false" aria-controls="collapseExample">🍳 Cooks</button>
         <div class="collapse" id="mealsToggleID_@Model?.Id">
             @foreach (var Meal in Model.MealsAsEater)
             {
@@ -20,7 +20,7 @@
             {
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text">@Model.Firstname heeft (nog) geen maaltijden bijgewoond</p>
+                        <p class="card-text">@Model.Firstname hasn't joined any meals yet</p>
                     </div>
                 </div>
             }
@@ -35,7 +35,7 @@
             {
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text">@Model.Firstname heeft (nog) geen maaltijden gemaakt</p>
+                        <p class="card-text">@Model.Firstname has not cooked anything yet</p>
                     </div>
                 </div>
             }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudentenHuis - @(ViewData["title"]??"Homepage")</title>
+    <title>StudentenHuis - @(ViewData["title"] ?? "Time to eat!")</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" asp-href-include="~/css/bundle.css" />
     <link rel="shortcut icon" asp-href-include="/favicon.png">
@@ -11,15 +11,15 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg mainnav">
-            <a href="/" class="navbar-brand">Studentenhuis</a>
+            <a href="/" class="navbar-brand">Student Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" />
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" asp-action="Index" asp-controller="Meal">Maaltijden</a>
-                    <a class="nav-item nav-link" asp-action="Index" asp-controller="Account">Gebruikers</a>
-                    <a class="nav-item nav-link" asp-action="NewMeal" asp-controller="Meal">Een maaltijd plannen</a>
+                    <a class="nav-item nav-link" asp-action="Index" asp-controller="Meal">Meals</a>
+                    <a class="nav-item nav-link" asp-action="Index" asp-controller="Account">Users</a>
+                    <a class="nav-item nav-link" asp-action="NewMeal" asp-controller="Meal">Add a new meal</a>
                 </div>
             </div>
         </nav>

@@ -1,6 +1,6 @@
 ﻿@model LoginModel
 
-<h1>Inloggen als student</h1>
+<h1>Sign in as student</h1>
 <div class="text-danger" asp-validation-summary="All"></div>
 <form asp-action="Login" asp-controller="Account" method="post">
     <input type="hidden" asp-for="ReturnUrl" />
@@ -14,5 +14,5 @@
         <div><span asp-validation-for="Password" class="text-danger"></span></div>
         <input asp-for="Password" class="form-control" />
     </div>
-    <button class="btn btn-primary" type="submit">Log In</button>
+    <button class="btn btn-primary" type="submit">Sign in</button>
 </form> 

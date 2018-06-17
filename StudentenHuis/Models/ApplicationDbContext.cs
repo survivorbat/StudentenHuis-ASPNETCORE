@@ -13,6 +13,8 @@ namespace StudentenHuis.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) {
                 
         }
+        public ApplicationDbContext() { }
+
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealStudent> MealStudents { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }

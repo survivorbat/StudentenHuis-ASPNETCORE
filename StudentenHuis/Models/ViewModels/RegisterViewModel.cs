@@ -9,21 +9,21 @@ namespace StudentenHuis.Models.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Gebruikersnaam")]
-        [StringLength(100, ErrorMessage = "{0} moet minstens {2} en hoogstens {1} karakters lang zijn.", MinimumLength = 1)]
+        [Display(Name = "Username")]
+        [StringLength(100, ErrorMessage = "{0} has to be at least {2} and max {1} characters long", MinimumLength = 1)]
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Voornaam")]
-        [StringLength(100, ErrorMessage = "{0} moet minstens {2} en hoogstens {1} karakters lang zijn.", MinimumLength = 1)]
+        [Display(Name = "Firstname")]
+        [StringLength(100, ErrorMessage = "{0} has to be at least {2} and max {1} characters long", MinimumLength = 1)]
         public string Firstname { get; set; }
 
         [Display(Name = "Middlename")]
         public string Middlename { get; set; }
 
         [Required]
-        [Display(Name = "Achternaam")]
-        [StringLength(100, ErrorMessage = "{0} moet minstens {2} en hoogstens {1} karakters lang zijn.", MinimumLength = 6)]
+        [Display(Name = "Lastname")]
+        [StringLength(100, ErrorMessage = "{0} has to be at least {2} and max {1} characters long", MinimumLength = 6)]
         public string Lastname { get; set; }
 
         [Required]
@@ -33,17 +33,18 @@ namespace StudentenHuis.Models.ViewModels
 
         [Required]
         [Phone]
-        [Display(Name = "Telefoonnummer")]
+        [RegularExpression("(06-[0-9]{8})", ErrorMessage = "A valid telephonenumber starts with 06- and contains 8 numbers")]
+        [Display(Name = "Telephonenumber")]
         public string Phonenumber { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} moet minstens {2} en hoogstens {1} karakters lang zijn.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} has to be at least {2} and max {1} characters long", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Wachtwoord")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Wachtwoord bevestigen")]
+        [Display(Name = "Password confirm")]
         [Compare("Password", ErrorMessage = "De wachtwoorden komen niet overeen")]
         public string ConfirmPassword { get; set; }
     }

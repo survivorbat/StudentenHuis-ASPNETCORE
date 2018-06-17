@@ -2,32 +2,32 @@
 
 <div class="row">
     <div class="col-12">
-        <h1>Een nieuwe maaltijd</h1>
+        <h1>Add a new meal</h1>
         <div class="text-danger" asp-validation-summary="All"></div>
         @using (Html.BeginForm("NewMeal", "Meal"))
         {
             <div class="form-group">
-                @Html.LabelFor(e => e.Title, "Titel")
+                @Html.LabelFor(e => e.Title)
                 @Html.EditorFor(e => e.Title, new { htmlAttributes = new { @class = "form-control" }, })
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.Description, "Beschrijving")
+                @Html.LabelFor(e => e.Description)
                 @Html.EditorFor(e => e.Description, new { htmlAttributes = new { @class = "form-control" }, })
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.Date, "Datum en tijd")
-                <input type="date" name="Date" value="@Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd")" class="form-control" />
+                @Html.LabelFor(e => e.Date)
+                <input type="datetime" name="Date" value="@Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss")" class="form-control" />
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.MaxAmountOfGuests, "Maximaal aantal gasten")
+                @Html.LabelFor(e => e.MaxAmountOfGuests)
                 @Html.EditorFor(e => e.MaxAmountOfGuests, new { htmlAttributes = new { @class = "form-control" }, })
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.Price, "Prijs per bezoeker")
+                @Html.LabelFor(e => e.Price)
                 @Html.EditorFor(e => e.Price, new { htmlAttributes = new { @class = "form-control" }, })
             </div>
             <div class="form-group">
-                <button type="submit" class="btn-dark btn btn-block">Maaltijd aanmaken</button>
+                <button type="submit" class="btn-dark btn btn-block">Submit meal</button>
             </div>
         }
     </div>

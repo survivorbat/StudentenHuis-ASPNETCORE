@@ -34,9 +34,7 @@ namespace StudentenHuis
             Configuration["Data:StudentenhuisMaaltijden:ConnectionString"]));
             services.AddTransient<IMealRepository, EFMealRepository>();
             services.AddTransient<IUserRepository, EFUserRepository>();
-            services.AddMvc();
-            services.AddMemoryCache();
-            services.AddSession();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
