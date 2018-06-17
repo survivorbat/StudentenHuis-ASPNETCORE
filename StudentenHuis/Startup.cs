@@ -36,6 +36,8 @@ namespace StudentenHuis
             services.AddTransient<IUserRepository, EFUserRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Voor demonstratie heb ik de wachtwoorden simpel gehouden, wanneer de applicatie gedeployed zou worden zouden deze opties uiteraard eruit gehaald worden
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;

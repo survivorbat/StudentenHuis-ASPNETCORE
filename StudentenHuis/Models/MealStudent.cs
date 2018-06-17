@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudentenHuis.Models
 {
+    // Koppeltabel
     public class MealStudent
     {
         public virtual ApplicationUser ApplicationUser { get; set; }

@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace StudentenHuis.Models
 {
+    // Uitbreiding op het IdentityFramework user model
     public class ApplicationUser : IdentityUser
     {
         public ApplicationUser()

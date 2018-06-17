@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentenHuis.Models
 {
+    // Deze klasse werd alleen gebruikt toen ik het EF nog niet geïmplementeerd had. Hierna heb ik de implementatie van het interface weggehaald net zoals in het boek.
     public class FakeMealRepository //: IMealRepository
     {
         public IEnumerable<Meal> Meals => new List<Meal> {

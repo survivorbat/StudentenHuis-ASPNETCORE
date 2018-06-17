@@ -11,6 +11,7 @@ namespace StudentenHuis.Controllers
 {
     public class HomeController : Controller
     {
+        // Render de index pagina met default tekst
         public ViewResult index()
         {
             return View();

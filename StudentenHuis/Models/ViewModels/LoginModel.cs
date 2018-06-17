@@ -6,7 +6,7 @@ namespace StudentenHuis.Models.ViewModels
         [Required]
         public string Name { get; set; }
         [Required]
- [UIHint("password")]
+        [UIHint("password")]
         public string Password { get; set; }
         public string ReturnUrl { get; set; } = "/";
     }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentenHuis.Models
 {
+    // Maaltijd
     public class Meal
     {
         public Meal()

@@ -34,7 +34,7 @@ namespace StudentenHuisTests
                 Meal5
             });
 
-            AccountsController meals = new AccountsController(mock.Object, UserMock.Object);
+            MealController meals = new MealController(mock.Object, UserMock.Object);
             List<Meal> list = meals.Index().ViewData.Model as List<Meal>;
             Assert.Equal(5, list.Count);
             Assert.Equal("Prachtmaaltijd", list[0].Title);
@@ -77,7 +77,7 @@ namespace StudentenHuisTests
                 new Meal() { ID=17, Title = "Maaltijd van lang geleden", Date = DateTime.Now.AddDays(-1)}
             });
 
-            AccountsController meals = new AccountsController(mock.Object, UserMock.Object);
+            MealController meals = new MealController(mock.Object, UserMock.Object);
             List<Meal> list = meals.Index().ViewData.Model as List<Meal>;
             Assert.Equal(15, list.Count);
         }
@@ -105,7 +105,7 @@ namespace StudentenHuisTests
                 Meal5
             });
 
-            AccountsController meals = new AccountsController(mock.Object, UserMock.Object);
+            MealController meals = new MealController(mock.Object, UserMock.Object);
             Meal Meal = meals.Detail(0).ViewData.Model as Meal;
             Assert.Equal("Prachtmaaltijd", Meal.Title);
             Assert.Equal("Prachtbeschrijving", Meal.Description);
@@ -143,7 +143,7 @@ namespace StudentenHuisTests
                 return false;
             });
 
-            AccountsController Controller = new AccountsController(mock.Object, UserMock.Object);
+            MealController Controller = new MealController(mock.Object, UserMock.Object);
             RedirectResult Result = Controller.JoinMeal(new StudentenHuis.Models.ViewModels.MealButtonViewModel()
             {
                 MealID = 5,
@@ -196,12 +196,65 @@ namespace StudentenHuisTests
                 return false;
             });
 
-            AccountsController Controller = new AccountsController(mock.Object, UserMock.Object);
+            MealController Controller = new MealController(mock.Object, UserMock.Object);
             RedirectResult DeletedMeal = Controller.DeleteMeal(new StudentenHuis.Models.ViewModels.MealButtonViewModel()
             {
                 MealID = 5
             }) as RedirectResult;
             Assert.Equal("/Meal", DeletedMeal?.Url ?? "");
+            Controller.JoinMeal(new StudentenHuis.Models.ViewModels.MealButtonViewModel()
+            {
+                MealID = 5,
+            });
+            ViewResult ViewResult = Controller.DeleteMeal(new StudentenHuis.Models.ViewModels.MealButtonViewModel()
+            {
+                MealID = 5,
+            }) as ViewResult;
+            Assert.Equal("Error", ViewResult?.ViewName ?? "");
+        }
+        [Fact]
+        public void CantUpdateWithEaters()
+        {
+            Mock<IMealRepository> mock = new Mock<IMealRepository>();
+            Mock<IUserRepository> UserMock = new Mock<IUserRepository>();
+
+            ApplicationUser User = new ApplicationUser() { Firstname = "Arno", Lastname = "Broeders" };
+            Meal Meal5 = new Meal()
+            {
+                ID = 5,
+                Cook = User,
+                Date = DateTime.Now.AddDays(2),
+                MaxAmountOfGuests = 1,
+                Price = 2.40,
+                Title = "Superdeal",
+                Description = "Superdeal"
+            };
+            User.MealsAsCook.Add(Meal5);
+            mock.Setup(m => m.Meals).Returns(new List<Meal>()
+            {
+                Meal5
+            });
+            mock.Setup(m => m.JoinMeal(It.IsAny<int>(), It.IsAny<string>())).Returns((int meal, string user) =>
+            {
+                if (Meal5.Eaters.Count < Meal5.MaxAmountOfGuests)
+                {
+                    Meal5.Eaters.Add(new MealStudent());
+                    return true;
+                }
+                return false;
+            });
+            mock.Setup(m => m.UpdateMeal(It.IsAny<Meal>())).Returns((Meal meal) =>
+            {
+                if (Meal5.Eaters.Count == 0)
+                {
+                    return true;
+                }
+                return false;
+            });
+
+            MealController Controller = new MealController(mock.Object, UserMock.Object);
+            RedirectResult EditedMeal = Controller.EditMeal(Meal5) as RedirectResult;
+            Assert.Equal("/Meal", EditedMeal?.Url ?? "");
             Controller.JoinMeal(new StudentenHuis.Models.ViewModels.MealButtonViewModel()
             {
                 MealID = 5,

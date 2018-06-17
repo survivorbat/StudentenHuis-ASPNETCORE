@@ -9,12 +9,10 @@
 }
 
 .mainnav {
-    border-style: solid;
-    border-color: rgba(10,10,10,0.7);
+    border-style: none;
     border-width: 1px;
     border-top-style: none;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
-    background-color: rgba(0,0,0,0.7);
     margin-bottom: 3em;
 }

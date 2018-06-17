@@ -20,12 +20,14 @@ namespace StudentenHuis.Controllers
             this.UserRepository = UserRepository;
         }
 
+        // Lijst aan gebruikers
         [Authorize]
         public ViewResult Index()
         {
             return View(UserRepository.Users);
         }
 
+        // Inloggen
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
